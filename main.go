@@ -1,11 +1,15 @@
 package main
 
 import (
+	"image/color"
 	"log"
 	"os"
 
 	"gioui.org/app"
+	"gioui.org/layout"
 	"gioui.org/op"
+	"gioui.org/op/paint"
+	"gioui.org/unit"
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 )
@@ -29,6 +33,13 @@ func run(window *app.Window) error {
 		Submit:     false,
 		ReadOnly:   false,
 	}
+	backgroundColor := color.NRGBA{
+		R: 30,
+		G: 30,
+		B: 30,
+		A: 255,
+	}
+
 	var ops op.Ops
 
 	for {
@@ -38,7 +49,17 @@ func run(window *app.Window) error {
 		case app.FrameEvent:
 			gtx := app.NewContext(&ops, e)
 
-			material.Editor(theme, editor, "Hello, World!").Layout(gtx)
+			gtx.Constraints.Min = e.Size
+			paint.Fill(gtx.Ops, backgroundColor)
+
+			layout.Flex{Axis: layout.Vertical}.Layout(gtx,
+				layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
+					ed := material.Editor(theme, editor, "Type here...")
+					ed.Color = color.NRGBA{R: 255, G: 255, B: 255, A: 255}
+					ed.HintColor = color.NRGBA{R: 255, G: 255, B: 255, A: 80}
+					return layout.UniformInset(unit.Dp(8)).Layout(gtx, ed.Layout)
+				}),
+			)
 
 			e.Frame(gtx.Ops)
 		}
