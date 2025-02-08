@@ -41,10 +41,7 @@ func run(window *app.Window) error {
 		WrapPolicy: text.WrapWords,
 	}
 	backgroundColor := color.NRGBA{
-		R: 30,
-		G: 30,
-		B: 30,
-		A: 255,
+		R: 30, G: 30, B: 30, A: 255,
 	}
 
 	var list widget.List
