@@ -24,6 +24,8 @@ var (
 func main() {
 	go func() {
 		window := new(app.Window)
+		window.Option(app.Title("Lixt"))
+
 		err := run(window)
 		if err != nil {
 			log.Fatal(err)
