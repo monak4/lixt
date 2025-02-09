@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"log"
 	"os"
+	"strings"
 
 	"gioui.org/app"
 	"gioui.org/layout"
@@ -39,6 +40,7 @@ func run(window *app.Window) error {
 		Submit:     false,
 		ReadOnly:   false,
 		WrapPolicy: text.WrapWords,
+		LineHeight: unit.Sp(18),
 	}
 	backgroundColor := color.NRGBA{
 		R: 30, G: 30, B: 30, A: 255,
@@ -57,18 +59,38 @@ func run(window *app.Window) error {
 			gtx.Constraints.Min = e.Size
 			paint.Fill(gtx.Ops, backgroundColor)
 
+			lines := strings.Split(editor.Text(), "\n")
+
 			layout.Flex{Axis: layout.Vertical}.Layout(gtx,
 				layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
-					ed := material.Editor(theme, editor, "Type here...")
-					ed.Color = white
-					ed.HintColor = white_
-
-					return material.List(theme, &list).Layout(gtx, 1, func(gtx layout.Context, index int) layout.Dimensions {
-						return layout.UniformInset(unit.Dp(8)).Layout(gtx, ed.Layout)
-					})
+					return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
+						layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+							// TODO: スクロール無効化 (Listを使うのをやめる？)
+							//		 エディターの行と同期
+							return material.List(theme, &list).Layout(gtx, len(lines), func(gtx layout.Context, index int) layout.Dimensions {
+								list.Axis = layout.Vertical
+								lbl := material.Label(theme, unit.Sp(12), LineNum(index+1))
+								lbl.Color = white
+								return layout.Inset{Left: unit.Dp(8), Top: unit.Dp(2)}.Layout(gtx, lbl.Layout)
+							})
+						}),
+						layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
+							ed := material.Editor(theme, editor, "Type here...")
+							ed.Color = white
+							ed.HintColor = white_
+							return layout.UniformInset(unit.Dp(8)).Layout(gtx, ed.Layout)
+						}),
+					)
 				}),
 			)
 			e.Frame(gtx.Ops)
 		}
 	}
+}
+
+func LineNum(num int) string {
+	if num < 10 {
+		return " " + string('0'+rune(num))
+	}
+	return string('0'+rune(num/10)) + string('0'+rune(num%10))
 }
