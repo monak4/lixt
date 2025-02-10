@@ -96,5 +96,3 @@ func LineNum(num int) string {
 	}
 	return string('0'+rune(num/10)) + string('0'+rune(num%10))
 }
-
-//test
