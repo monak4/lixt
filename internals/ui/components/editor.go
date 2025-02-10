@@ -32,13 +32,17 @@ var (
 )
 
 func (t *TextEditor) Layout(gtx layout.Context, theme *material.Theme) layout.Dimensions {
+	var list widget.List
+	list.Axis = layout.Horizontal
 	return layout.Flex{}.Layout(gtx,
 		layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
 			ed := material.Editor(theme, &t.editor, "Type here...")
 			ed.Color = white
 			ed.HintColor = white_
 
-			return layout.UniformInset(unit.Dp(8)).Layout(gtx, ed.Layout)
+			return material.List(theme, &list).Layout(gtx, 1, func(gtx layout.Context, index int) layout.Dimensions {
+				return layout.UniformInset(unit.Dp(8)).Layout(gtx, ed.Layout)
+			})
 		}),
 	)
 }

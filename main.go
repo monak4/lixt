@@ -43,7 +43,6 @@ func run(window *app.Window) error {
 		case app.FrameEvent:
 			gtx := app.NewContext(&ops, e)
 
-			gtx.Constraints.Min = e.Size
 			paint.Fill(gtx.Ops, backgroundColor)
 
 			w.Layout(gtx)
