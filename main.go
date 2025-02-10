@@ -19,6 +19,10 @@ import (
 var (
 	white  = color.NRGBA{R: 255, G: 255, B: 255, A: 255}
 	white_ = color.NRGBA{R: 255, G: 255, B: 255, A: 80}
+
+	backgroundColor = color.NRGBA{
+		R: 30, G: 30, B: 30, A: 255,
+	}
 )
 
 func main() {
@@ -43,9 +47,6 @@ func run(window *app.Window) error {
 		ReadOnly:   false,
 		WrapPolicy: text.WrapWords,
 		LineHeight: unit.Sp(18),
-	}
-	backgroundColor := color.NRGBA{
-		R: 30, G: 30, B: 30, A: 255,
 	}
 
 	var list widget.List
