@@ -8,16 +8,18 @@ import (
 )
 
 type Window struct {
-	theme   *material.Theme
-	menuBar *components.MenuBar
-	editor  *components.TextEditor
+	theme     *material.Theme
+	menuBar   *components.MenuBar
+	editor    *components.TextEditor
+	statusBar *components.StatusBar
 }
 
 func NewWindow() *Window {
 	return &Window{
-		theme:   material.NewTheme(),
-		menuBar: components.NewMenuBar(),
-		editor:  components.NewTextEditor(),
+		theme:     material.NewTheme(),
+		menuBar:   components.NewMenuBar(),
+		editor:    components.NewTextEditor(),
+		statusBar: components.NewStatusBar(),
 	}
 }
 
@@ -46,6 +48,9 @@ func (w *Window) Layout(gtx layout.Context) layout.Dimensions {
 					return w.editor.Layout(gtx, w.theme)
 				}),
 			)
+		}),
+		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			return w.statusBar.Layout(gtx, w.theme)
 		}),
 	)
 }
