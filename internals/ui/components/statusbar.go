@@ -23,9 +23,10 @@ func NewStatusBar() *StatusBar {
 func (s *StatusBar) Layout(gtx layout.Context, theme *material.Theme) layout.Dimensions {
 	return layout.Flex{
 		Alignment: layout.Middle,
+		Spacing:   layout.SpaceEnd,
 		Axis:      layout.Horizontal,
 	}.Layout(gtx,
-		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+		layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
 			inset := layout.UniformInset(unit.Dp(4))
 			return inset.Layout(gtx, func(gtx layout.Context) layout.Dimensions {
 				label := material.Label(theme, unit.Sp(10), s.Message)
