@@ -8,16 +8,16 @@ import (
 )
 
 type Window struct {
-	theme     *material.Theme
-	menuBar   *components.MenuBar
+	theme *material.Theme
+	// menuBar   *components.MenuBar
 	editor    *components.TextEditor
 	statusBar *components.StatusBar
 }
 
 func NewWindow() *Window {
 	return &Window{
-		theme:     material.NewTheme(),
-		menuBar:   components.NewMenuBar(),
+		theme: material.NewTheme(),
+		// menuBar:   components.NewMenuBar(),
 		editor:    components.NewTextEditor(),
 		statusBar: components.NewStatusBar(),
 	}
