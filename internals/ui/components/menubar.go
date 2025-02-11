@@ -27,9 +27,9 @@ type MenuBar struct {
 	Backdrop widget.Clickable
 }
 
-func NewMenuBar(theme *material.Theme) *MenuBar {
+func NewMenuBar() *MenuBar {
 	return &MenuBar{
-		Theme: theme,
+		Theme: material.NewTheme(),
 	}
 }
 
