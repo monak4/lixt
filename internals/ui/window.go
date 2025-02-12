@@ -9,7 +9,6 @@ import (
 
 type Window struct {
 	theme     *material.Theme
-	menuBar   *components.MenuBar
 	editor    *components.TextEditor
 	statusBar *components.StatusBar
 }
@@ -17,7 +16,6 @@ type Window struct {
 func NewWindow() *Window {
 	return &Window{
 		theme:     material.NewTheme(),
-		menuBar:   components.NewMenuBar(),
 		editor:    components.NewTextEditor(),
 		statusBar: components.NewStatusBar(),
 	}
@@ -25,10 +23,6 @@ func NewWindow() *Window {
 
 func (w *Window) Layout(gtx layout.Context) layout.Dimensions {
 	return layout.Flex{Axis: layout.Vertical}.Layout(gtx,
-		// Menubar
-		// layout.Rigid(func(gtx layout.Context) layout.Dimensions {
-		// 	return w.menuBar.Layout(gtx, w.theme)
-		// }),
 		layout.Flexed(1, func(gtx layout.Context) layout.Dimensions {
 			return layout.Flex{Axis: layout.Horizontal}.Layout(gtx,
 				layout.Rigid(func(gtx layout.Context) layout.Dimensions {
