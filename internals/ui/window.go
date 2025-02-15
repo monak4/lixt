@@ -1,6 +1,8 @@
 package ui
 
 import (
+	"strconv"
+
 	"gioui.org/layout"
 	"gioui.org/widget/material"
 
@@ -17,7 +19,7 @@ func NewWindow() *Window {
 	return &Window{
 		theme:     material.NewTheme(),
 		editor:    components.NewTextEditor(),
-		statusBar: components.NewStatusBar(),
+		statusBar: components.NewStatusBar(1, 1),
 	}
 }
 
@@ -44,6 +46,9 @@ func (w *Window) Layout(gtx layout.Context) layout.Dimensions {
 			)
 		}),
 		layout.Rigid(func(gtx layout.Context) layout.Dimensions {
+			ed := w.editor.ReturnEditor()
+			ln, col := ed.CaretPos()
+			w.statusBar.Message = "Ln " + strconv.Itoa(ln) + ", Col " + strconv.Itoa(col) + " | UTF-8 | Go"
 			return w.statusBar.Layout(gtx, w.theme)
 		}),
 	)

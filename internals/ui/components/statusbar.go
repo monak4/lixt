@@ -2,6 +2,7 @@ package components
 
 import (
 	"image/color"
+	"strconv"
 
 	"gioui.org/layout"
 	"gioui.org/text"
@@ -9,14 +10,13 @@ import (
 	"gioui.org/widget/material"
 )
 
-// いったんがわだけ
 type StatusBar struct {
 	Message string
 }
 
-func NewStatusBar() *StatusBar {
+func NewStatusBar(ln, col int) *StatusBar {
 	return &StatusBar{
-		Message: "Ln 1, Col 1 | UTF-8 | Go",
+		Message: "Ln " + strconv.Itoa(ln) + ", Col " + strconv.Itoa(col) + " | UTF-8 | Go",
 	}
 }
 
